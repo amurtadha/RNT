@@ -23,7 +23,7 @@ Required packages are listed in the requirements.txt file:
 *  Go to code/         
 *  Run the following code to train under noisy label settuings:
 ```
-python run.py --dataset='SST' --train_sample=30
+python run.py --dataset='SST-5' --train_sample=30
 ```
 
 - The params could be :
