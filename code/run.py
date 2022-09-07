@@ -29,7 +29,7 @@ class Instructor:
     def __init__(self, opt):
         self.opt = opt
 
-        # fn = process_ACD if opt.task == 'ACD' else process_pt
+        
         tokenizer = AutoTokenizer.from_pretrained(self.opt.pretrained_bert_name)
         self.tokenizer=tokenizer
         cache = 'cache/RNT_{0}_{1}.pk'.format(self.opt.dataset, self.opt.plm)
@@ -57,29 +57,8 @@ class Instructor:
         if x < warmup:
             return x / warmup
         return 1.0 - x
-    def _print_args(self):
-        n_trainable_params, n_nontrainable_params = 0, 0
-        for p in self.model.parameters():
-            n_params = torch.prod(torch.tensor(p.shape))
-            if p.requires_grad:
-                n_trainable_params += n_params
-            else:
-                n_nontrainable_params += n_params
-        logger.info('n_trainable_params: {0}, n_nontrainable_params: {1}'.format(n_trainable_params, n_nontrainable_params))
-        logger.info('> training arguments:')
-        for arg in vars(self.opt):
-            logger.info('>>> {0}: {1}'.format(arg, getattr(self.opt, arg)))
-
-    def _reset_params(self):
-        for child in self.model.children():
-            if type(child) != RobertaModel:  # skip bert params
-                for p in child.parameters():
-                    if p.requires_grad:
-                        if len(p.shape) > 1:
-                            self.opt.initializer(p)
-                        else:
-                            stdv = 1. / math.sqrt(p.shape[0])
-                            torch.nn.init.uniform_(p, a=-stdv, b=stdv)
+   
+    
 
 
     def _generate_features(self,model, data_loader):
@@ -422,22 +401,7 @@ class Instructor:
             train_losses = train_losses * 0 - 1.
 
 
-            # if epoch % self.opt.num_hist == 0:
-            #
-            #     logger.info('saving separated histogram...')
-            #     plt.hist(train_preds_hist.mean(1)[torch.arange(len(train_data_loader.dataset))[clean_ids]
-            #                                       , np.array([d['label'] for d in train_data_loader.dataset])[
-            #         clean_ids]].numpy(), bins=20, range=(0., 1.), edgecolor='black', alpha=0.5, label='clean')
-            #     plt.hist(train_preds_hist.mean(1)[
-            #                  torch.arange(len(train_data_loader.dataset))[noisy_ids]
-            #                  ,  np.array([d['label'] for d in train_data_loader.dataset])[
-            #                      noisy_ids]].numpy(), bins=20, range=(0., 1.), edgecolor='black', alpha=
-            #              0.5, label='noisy')
-            #     plt.xlabel('probability');
-            #     plt.ylabel('number of data')
-            #     plt.grid()
-            #     plt.savefig(self.opt.save_dir_histo + '/histogram_sep_epoch%03d.jpg' % ( epoch))
-            #     plt.clf()
+           
         with open('results/main.txt', 'a+') as f :
             f.write('dataset is {0} labeled samples are {1} Micro-F1 score  {2} Accuracy {3} Macro-F1 score {4}  \n'.format(self.opt.dataset, self.opt.train_sample, str(round(best_f1_micro_test, 4)), str(round(best_acc_test, 4)),str(round(best_f1_test, 4))))
         f.close()
@@ -586,10 +550,7 @@ class Instructor:
 
                 clean_features = torch.from_numpy(ckpt_clean_repres[ids]).to('cuda')
                 clean_features = F.normalize(clean_features)
-                # cosine = F.linear(noise_features, clean_features).squeeze(0).cpu().tolist()
-                # for k, id_ in enumerate(ids):
-                #     rel.append((j, id_, round(cosine[k], 1)))
-
+               
                 cosine = torch.ones(len(ids), self.opt.lebel_dim).to('cuda')
                 cosine[:, j] = F.linear(noise_features, clean_features)
                 l = loss(cosine, torch.tensor([j] * len(ids)).to('cuda')).item()
@@ -631,10 +592,7 @@ class Instructor:
             self.extract_DST_feature(valid_path, n_sample=5, data=ckpt_val, data_clean=ckpt_clean)
             self.extract_DST_feature(noise_path, n_sample=5, data=ckpt_noise, data_clean=ckpt_clean)
 
-        # fine tune top m parameter
-        # dev_data = pk.load(open(valid_path, 'rb'))
-        # dev_noise = Noisiness(self.opt, dev_data)
-        # dev_noise.getNoisy(save=True, top_m=0.5)
+       
         logger.info('Noise Filtering ')
         noise_data = pk.load(open(noise_path, 'rb'))
         noise = Noisiness(self.opt, noise_data)
@@ -681,8 +639,7 @@ class Instructor:
         path_clean = os.path.join(self.opt.save_dir, 'clean_{0}_{1}_{2}.tar'.format(self.opt.dataset, self.opt.plm,str(self.opt.train_sample)))
         path_noise = os.path.join(self.opt.save_dir, 'noise_{0}_{1}_{2}.tar'.format(self.opt.dataset, self.opt.plm, str(self.opt.train_sample)))
         path_valid = os.path.join(self.opt.save_dir, 'valid_{0}_{1}_{2}.tar'.format(self.opt.dataset, self.opt.plm, str(self.opt.train_sample)))
-        # logger.info('saving best model...')
-        # shutil.copyfile(fn, fn_best)
+       
         torch.save(state_clean, path_clean)
         torch.save(state_noise, path_noise)
         torch.save(state_val, path_valid)
