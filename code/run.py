@@ -14,7 +14,6 @@ import numpy as np
 from torch.utils.data import DataLoader,ConcatDataset
 from data_utils import   process_pt
 import matplotlib.pyplot as plt
-import pandas as pd
 from tqdm import tqdm
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -609,8 +608,7 @@ class Instructor:
             n_cand.evidence = False
             data_to_save[len(data_to_save)] = n_cand
 
-            # trainin_data.append([pred.item(), logits, ckpt_val_output[i].tolist(), 0 if trg == pred else 1, trg])
-        # trainin_data = pd.DataFrame(trainin_data, columns=['pred', 'cosine', 'logits', 'label', 'ori_label'])
+           
 
         pk.dump(data_to_save, open(path_, 'wb'))
 
