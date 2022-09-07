@@ -25,7 +25,7 @@ import torch.nn.functional as F
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 import pickle as pk
-from compute_noisiness_DST import RelDST, Noisiness
+from EvidentialSupport import RelDST, Noisiness
 class Instructor:
     def __init__(self, opt):
         self.opt = opt
