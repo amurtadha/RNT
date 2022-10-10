@@ -396,7 +396,7 @@ class Instructor:
             is_best = val_acc >= best_valid_acc
             if is_best:
 
-                path = 'state_dict/{0}_nt_{1}_{2}.bm'.format(self.opt.dataset, self.opt.plm, str(self.opt.train_sample))
+                path = 'state_dict/{}_nt_{}_{}_{}.bm'.format(self.opt.dataset, self.opt.plm, str(self.opt.train_sample), self.opt.filtering)
                 if self.opt.save_model_nt:
                     torch.save(model.module.state_dict(), path)
                 model.eval()
@@ -859,26 +859,6 @@ def main():
 
 
 
-
-
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
