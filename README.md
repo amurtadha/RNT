@@ -19,10 +19,10 @@ Required packages are listed in the requirements.txt file:
 ```
 pip install -r requirements.txt
 ```
-# How to use
+# Training
 
 *  Go to code/         
-*  Run the following code to train under noisy label settuings:
+*  Run the following code to train RNT:
 ```
 python run.py --dataset='SST-5' --train-sample=30
 ```
@@ -33,3 +33,10 @@ python run.py --dataset='SST-5' --train-sample=30
 
 The results will be written to results/main_nt.txt
 
+# Evaluation
+
+*  Go to code/         
+*  Run the following code to evaluate RNT:
+```
+python evaluate.py --dataset='SST-5' --train-sample=30
+```
