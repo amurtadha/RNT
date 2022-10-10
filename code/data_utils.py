@@ -4,7 +4,8 @@ import  json
 from tqdm import tqdm
 import numpy as np
 
-class process_pt(Dataset):
+
+class MyDataset(Dataset):
     def __init__(self,opt, fname, tokenizer,noisy=False):
         self.tokenizer=tokenizer
         self.max_seq_len=opt.max_seq_len
@@ -36,6 +37,7 @@ class process_pt(Dataset):
             input_ids = np.asarray(input_ids, dtype='int64')
             input_mask = np.asarray(input_mask, dtype='int64')
             segment_ids = np.asarray(segment_ids, dtype='int64')
+
             if opt.task == 'STS':
                 data = {
                     'text': text,
@@ -43,7 +45,6 @@ class process_pt(Dataset):
                     'input_ids': input_ids,
                     'segments_ids': segment_ids,
                     'input_mask': input_mask,
-                    'label': labels[label],
                     'ori_label': labels[d['ori_label']]
                 }
             else:
