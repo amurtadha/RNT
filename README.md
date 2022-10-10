@@ -24,12 +24,12 @@ pip install -r requirements.txt
 *  Go to code/         
 *  Run the following code to train under noisy label settuings:
 ```
-python run.py --dataset='SST-5' --train_sample=30
+python run.py --dataset='SST-5' --train-sample=30
 ```
 
 - The params could be :
     - --dataset =\{AG,yelp, yahoo, TREC,SST, SST-5, CR, MR\}
     - --train_sample ={0, 30,1000, 10000}, where 0 denotes 10% of the labeled data
 
-The results will be written to results/main.txt
+The results will be written to results/main_nt.txt
 
