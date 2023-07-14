@@ -2,10 +2,7 @@
  # RNT 
  A model  for learning under semi-supervised settings
  
- This is the source code for the paper: Murtadha, Ahmed, et al. "Rank-Aware Negative Training for Semi-Supervised Text Classification". If you use the code,  please cite the paper: 
- ```
-```
- 
+ This is the source code for the paper: Murtadha, Ahmed, et al. "Rank-Aware Negative Training for Semi-Supervised Text Classification". 
 
 # Data
 
@@ -40,3 +37,24 @@ The results will be written to results/main_nt.txt
 ```
 python evaluate.py --dataset='SST-5' --train-sample=30
 ```
+
+
+If you use the code,  please cite the paper: 
+ ```
+@article{RNT-TACL-2023,
+  author       = {Ahmed Murtadha and
+                  Shengfeng Pan and
+                  Wen Bo and
+                  Jianlin Su and
+                  Xinxin Cao and
+                  Wenze Zhang and
+                  Yunfeng Liu},
+  title        = {Rank-Aware Negative Training for Semi-Supervised Text Classification},
+  journal      = {CoRR},
+  volume       = {abs/2306.07621},
+  year         = {2023},
+  url          = {https://doi.org/10.48550/arXiv.2306.07621},
+  doi          = {10.48550/arXiv.2306.07621}
+}
+```
+ 
