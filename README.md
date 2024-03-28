@@ -50,7 +50,7 @@ If you use the code,  please cite the paper:
                   Wenze Zhang and
                   Yunfeng Liu},
   title        = {Rank-Aware Negative Training for Semi-Supervised Text Classification},
-  journal      = {CoRR},
+  journal      = {Transactions of the Association for Computational Linguistics (TACL, 2023)},
   volume       = {abs/2306.07621},
   year         = {2023},
   url          = {https://doi.org/10.48550/arXiv.2306.07621},
